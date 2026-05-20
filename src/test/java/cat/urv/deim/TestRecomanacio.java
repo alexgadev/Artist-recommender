@@ -17,36 +17,36 @@ public class TestRecomanacio {
     // -------------------------------------------------------------------------
 
     private Usuari crearUsuariEspanya30Home() {
-        return new Usuari(1, "m", 30, "Usuari Espanya", "Spain");
+        return new Usuari("1", "m", 30, "Usuari Espanya", "Spain");
     }
 
     private Usuari crearUsuariEspanya28Home() {
-        return new Usuari(2, "m", 28, "Usuari Espanya 2", "Spain");
+        return new Usuari("2", "m", 28, "Usuari Espanya 2", "Spain");
     }
 
     private Usuari crearUsuariFranca35Dona() {
-        return new Usuari(3, "f", 35, "Usuari Franca", "France");
+        return new Usuari("3", "f", 35, "Usuari Franca", "France");
     }
 
     private Usuari crearUsuariEspanya55Home() {
-        return new Usuari(4, "m", 55, "Usuari Espanya 3", "Spain");
+        return new Usuari("4", "m", 55, "Usuari Espanya 3", "Spain");
     }
 
     // Representa un artista (el camp titol = nom de l'artista)
     private Artista crearArtista1() {
-        return new Artista(1, "Radiohead");
+        return new Artista("1", "Radiohead");
     }
 
     private Artista crearArtista2() {
-        return new Artista(2, "Portishead");
+        return new Artista("2", "Portishead");
     }
 
     private Artista crearArtista3() {
-        return new Artista(3, "Muse");
+        return new Artista("3", "Muse");
     }
 
     private Artista crearArtista4() {
-        return new Artista(4, "Blur");
+        return new Artista("4", "Blur");
     }
 
     // -------------------------------------------------------------------------
@@ -55,7 +55,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPaisRetornaArtistesDelMateixPais() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya28Home();
         Usuari u3 = crearUsuariFranca35Dona();
@@ -83,7 +83,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPaisNoRetornaArtistesAmbPoquesProduccions() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya28Home();
         Artista a1 = crearArtista1();
@@ -104,7 +104,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPaisNoInclouArtistesJaEscoltats() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya28Home();
         Artista a1 = crearArtista1();
@@ -128,7 +128,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerEdatRetornaArtistesDelRangEdat() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();      // edat 30
         Usuari u2 = crearUsuariEspanya28Home();      // edat 28 (dins rang 5)
         Usuari u3 = crearUsuariEspanya55Home();      // edat 55 (fora rang)
@@ -155,10 +155,10 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerEdatFrontera() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();  // edat 30
-        Usuari u2 = new Usuari(5, "user-es-25-f", "Usuari 25", "Spain", 25, "f"); // edat 25 = just at boundary
-        Usuari u3 = new Usuari(6, "user-es-24-m", "Usuari 24", "Spain", 24, "m"); // edat 24 = out of boundary
+        Usuari u2 = new Usuari("5", "f", 25, "Usuari 25", "Spain"); // edat 25 = just at boundary
+        Usuari u3 = new Usuari("6", "m", 24, "Usuari 24", "Spain"); // edat 24 = out of boundary
         Artista a1 = crearArtista1();
         Artista a2 = crearArtista2();
         Artista a3 = crearArtista3();
@@ -182,8 +182,8 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioIgnoraEdatSiEdatDesconeguda() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
-        Usuari u1 = new Usuari(1, "user-no-age", "Sense edat", "Spain", -1, "m");
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
+        Usuari u1 = new Usuari("1", "user-no-age", -1, "Sense edat", "Spain");
         Usuari u2 = crearUsuariEspanya28Home();
         Artista a1 = crearArtista1();
         Artista a2 = crearArtista2();
@@ -204,7 +204,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioRangEdatNegatiuIgnoraFiltreEdat() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya55Home(); // edat molt diferent
         Artista a1 = crearArtista1();
@@ -230,7 +230,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerSexeRetornaArtistesDelMateixSexe() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();  // m
         Usuari u2 = crearUsuariEspanya28Home();  // m (mateix sexe)
         Usuari u3 = crearUsuariFranca35Dona();   // f (sexe diferent)
@@ -257,9 +257,9 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioSexeDesconegutNoEsConsidera() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home(); // m
-        Usuari u2 = new Usuari(5, "user-no-sex", "Sense sexe", "Spain", 28, ""); // sense sexe
+        Usuari u2 = new Usuari("5", "", 28, "Sense sexe", "Spain"); // sense sexe
         Artista a1 = crearArtista1();
         Artista a2 = crearArtista2();
 
@@ -283,7 +283,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPreferitsComparteixArtista() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariFranca35Dona(); // país/sexe/edat diferent
         Artista a1 = crearArtista1();
@@ -311,7 +311,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPreferitsNoComparteixCapArtistaPreferit() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariFranca35Dona();
         Artista a1 = crearArtista1();
@@ -340,7 +340,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPreferitsSegonArtistaTambdCompta() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariFranca35Dona();
         Artista a1 = crearArtista1();
@@ -371,7 +371,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPaisIEdatRequereixTotsDos() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya28Home();  // mateix país + dins rang edat
         Usuari u3 = crearUsuariFranca35Dona();   // dins rang edat, país diferent
@@ -404,11 +404,11 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioPerPaisISexe() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();                                     // m, Spain
         Usuari u2 = crearUsuariEspanya28Home();                                     // m, Spain (match)
-        Usuari u3 = new Usuari(5, "user-es-25-f", "U5", "Spain", 25, "f");         // f, Spain (no match sexe)
-        Usuari u4 = new Usuari(6, "user-fr-28-m", "U6", "France", 28, "m");        // m, France (no match pais)
+        Usuari u3 = new Usuari("5", "f", 25, "U5", "Spain");         // f, Spain (no match sexe)
+        Usuari u4 = new Usuari("6", "m", 28, "U6", "France");        // m, France (no match pais)
         Artista a1 = crearArtista1();
         Artista a2 = crearArtista2();
         Artista a3 = crearArtista3();
@@ -441,10 +441,10 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioSenseArtistesRepetits() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya28Home();
-        Usuari u3 = new Usuari(5, "user-es-31-m", "Usuari Espanya 4", "Spain", 31, "m");
+        Usuari u3 = new Usuari("5", "m", 31, "Usuari Espanya 4", "Spain");
         Artista a1 = crearArtista1();
         Artista a2 = crearArtista2();
 
@@ -471,14 +471,14 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioUsuariInexistentLlancaExcepcio() {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         assertThrows(ElementNoTrobat.class,
                 () -> graf.recomanacio("no-existeix", 100, false, -1, false, false));
     }
 
     @Test
     public void testRecomanacioSenseFiltresTotsElsUsuarisSonSimilars() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariFranca35Dona(); // país, sexe i edat diferents
         Artista a1 = crearArtista1();
@@ -500,7 +500,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioSenseUsuarisSimilarsRetornaLlistaBuida() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariFranca35Dona();
         Artista a1 = crearArtista1();
@@ -522,7 +522,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioGrafSenseAltresUsuarisRetornaLlistaBuida() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Artista a1 = crearArtista1();
 
@@ -537,7 +537,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioLlindarExacteNoComptaIgual() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();
         Usuari u2 = crearUsuariEspanya28Home();
         Artista a1 = crearArtista1();
@@ -560,7 +560,7 @@ public class TestRecomanacio {
 
     @Test
     public void testRecomanacioUsuariSenseEscoltesPropies() throws ElementNoTrobat {
-        GrafUsuarisCancons graf = new GrafUsuarisCancons(100);
+        GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home(); // sense escolta pròpia
         Usuari u2 = crearUsuariEspanya28Home();
         Artista a1 = crearArtista1();

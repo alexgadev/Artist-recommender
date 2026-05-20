@@ -3,13 +3,13 @@ package cat.urv.deim;
 import java.util.Objects;
 
 public class Usuari implements Comparable<Usuari> {
-    private final int sha;
+    private final String sha;
     private final String genere;
     private final int edat;
     private final String pais;
     private final String naixement;
 
-    public Usuari(int sha, String genere, int edat, String pais, String naixement) {
+    public Usuari(String sha, String genere, int edat, String pais, String naixement) {
         this.sha = sha;
         this.genere = genere;
         this.edat = edat;
@@ -17,7 +17,7 @@ public class Usuari implements Comparable<Usuari> {
         this.naixement = naixement;
     }
 
-    public int getSha() {
+    public String getSha() {
         return sha;
     }
 
@@ -39,11 +39,7 @@ public class Usuari implements Comparable<Usuari> {
 
     @Override
     public int compareTo(Usuari altre) {
-        int comparacio = Integer.compare(sha, altre.sha);
-        if (comparacio != 0) {
-            return comparacio;
-        }
-        return Integer.compare(sha, altre.sha);
+        return sha.compareTo(altre.sha);
     }
 
     @Override

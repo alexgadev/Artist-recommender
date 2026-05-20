@@ -3,15 +3,15 @@ package cat.urv.deim;
 import java.util.Objects;
 
 public class Artista implements Comparable<Artista> {
-    private final int id;
+    private final String id;
     private final String artista;
 
-    public Artista(int id, String artista) {
+    public Artista(String id, String artista) {
         this.id = id;
         this.artista = artista;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -21,11 +21,7 @@ public class Artista implements Comparable<Artista> {
 
     @Override
     public int compareTo(Artista altra) {
-        int comparacio = artista.compareTo(altra.artista);
-        if (comparacio != 0) {
-            return comparacio;
-        }
-        return Integer.compare(id, altra.id);
+        return artista.compareTo(altra.artista);
     }
 
     @Override
