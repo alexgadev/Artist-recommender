@@ -17,19 +17,19 @@ public class TestRecomanacio {
     // -------------------------------------------------------------------------
 
     private Usuari crearUsuariEspanya30Home() {
-        return new Usuari("1", "m", 30, "Usuari Espanya", "Spain");
+        return new Usuari("1m30s", "m", 30, "Espanya", "Feb 22, 2009");
     }
 
     private Usuari crearUsuariEspanya28Home() {
-        return new Usuari("2", "m", 28, "Usuari Espanya 2", "Spain");
+        return new Usuari("2m28s", "m", 28, "Espanya", "Jun 17, 2007");
     }
 
     private Usuari crearUsuariFranca35Dona() {
-        return new Usuari("3", "f", 35, "Usuari Franca", "France");
+        return new Usuari("3f35f", "f", 35, "Franca", "Oct 4, 2008");
     }
 
     private Usuari crearUsuariEspanya55Home() {
-        return new Usuari("4", "m", 55, "Usuari Espanya 3", "Spain");
+        return new Usuari("4m55s", "m", 55, "Espanya", "Nov 23, 2008");
     }
 
     // Representa un artista (el camp titol = nom de l'artista)
@@ -74,7 +74,7 @@ public class TestRecomanacio {
         graf.inserirEscoltes(u2, a2, 200);
         graf.inserirEscoltes(u3, a3, 300);
 
-        TADLlista<String> recomanats = graf.recomanacio("user-es-30-m", 50, false, -1, true, false);
+        TADLlista<String> recomanats = graf.recomanacio("1m30s", 50, false, -1, true, false);
 
         assertTrue(recomanats.existeix("Portishead"));
         assertFalse(recomanats.existeix("Radiohead")); // ja escoltat per u1
@@ -97,7 +97,7 @@ public class TestRecomanacio {
         graf.inserirEscoltes(u1, a1, 200);
         graf.inserirEscoltes(u2, a2, 30); // per sota del llindar de 100
 
-        TADLlista<String> recomanats = graf.recomanacio("user-es-30-m", 100, false, -1, true, false);
+        TADLlista<String> recomanats = graf.recomanacio("1m30s", 100, false, -1, true, false);
 
         assertEquals(0, recomanats.numElem());
     }
@@ -116,7 +116,7 @@ public class TestRecomanacio {
         graf.inserirEscoltes(u1, a1, 150);
         graf.inserirEscoltes(u2, a1, 400);
 
-        TADLlista<String> recomanats = graf.recomanacio("user-es-30-m", 100, false, -1, true, false);
+        TADLlista<String> recomanats = graf.recomanacio("1m30s", 100, false, -1, true, false);
 
         assertFalse(recomanats.existeix("Radiohead"));
         assertEquals(0, recomanats.numElem());
@@ -147,7 +147,7 @@ public class TestRecomanacio {
         graf.inserirEscoltes(u2, a2, 200);
         graf.inserirEscoltes(u3, a3, 300);
 
-        TADLlista<String> recomanats = graf.recomanacio("user-es-30-m", 100, false, 5, false, false);
+        TADLlista<String> recomanats = graf.recomanacio("1m30s", 100, false, 5, false, false);
 
         assertTrue(recomanats.existeix("Portishead"));
         assertFalse(recomanats.existeix("Muse")); // fora del rang d'edat
@@ -157,8 +157,8 @@ public class TestRecomanacio {
     public void testRecomanacioPerEdatFrontera() throws ElementNoTrobat {
         GrafUsuarisArtistes graf = new GrafUsuarisArtistes(100);
         Usuari u1 = crearUsuariEspanya30Home();  // edat 30
-        Usuari u2 = new Usuari("5", "f", 25, "Usuari 25", "Spain"); // edat 25 = just at boundary
-        Usuari u3 = new Usuari("6", "m", 24, "Usuari 24", "Spain"); // edat 24 = out of boundary
+        Usuari u2 = new Usuari("5f25s", "f", 25, "Espanya", "Sep 24, 2008"); // edat 25 = just at boundary
+        Usuari u3 = new Usuari("6m24s", "m", 24, "Espanya", "Jul 1, 2007"); // edat 24 = out of boundary
         Artista a1 = crearArtista1();
         Artista a2 = crearArtista2();
         Artista a3 = crearArtista3();
@@ -174,7 +174,7 @@ public class TestRecomanacio {
         graf.inserirEscoltes(u2, a2, 200);
         graf.inserirEscoltes(u3, a3, 300);
 
-        TADLlista<String> recomanats = graf.recomanacio("user-es-30-m", 100, false, 5, false, false);
+        TADLlista<String> recomanats = graf.recomanacio("1m30s", 100, false, 5, false, false);
 
         assertTrue(recomanats.existeix("Portishead"));  // |30-25| = 5, dins rang
         assertFalse(recomanats.existeix("Muse"));       // |30-24| = 6, fora rang

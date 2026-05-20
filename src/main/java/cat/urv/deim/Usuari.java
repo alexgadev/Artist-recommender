@@ -7,14 +7,14 @@ public class Usuari implements Comparable<Usuari> {
     private final String genere;
     private final int edat;
     private final String pais;
-    private final String naixement;
+    private final String signup;
 
-    public Usuari(String sha, String genere, int edat, String pais, String naixement) {
+    public Usuari(String sha, String genere, int edat, String pais, String signup) {
         this.sha = sha;
         this.genere = genere;
         this.edat = edat;
         this.pais = pais;
-        this.naixement = naixement;
+        this.signup = signup;
     }
 
     public String getSha() {
@@ -33,8 +33,8 @@ public class Usuari implements Comparable<Usuari> {
         return pais;
     }
 
-    public String getNaixement() {
-        return naixement;
+    public String getSignup() {
+        return signup;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Usuari implements Comparable<Usuari> {
                 ", genere='" + genere + '\'' +
                 ", edat=" + edat + '\'' +
                 ", pais='" + pais + '\'' +
-                ", naixement='" + naixement +
+                ", creacio del compte='" + signup +
                 '}';
     }
 }

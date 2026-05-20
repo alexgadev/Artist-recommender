@@ -197,8 +197,87 @@ public class GrafUsuarisArtistes {
         return this.graf.numVertexEsquerra() == 0 && this.graf.numVertexDret() == 0;
     }
 
-    public TADLlista<String> recomanacio(String userId, int numMinEscoltes, boolean sexe, int rangEdat, boolean pais, boolean preferits){
+    public TADLlista<String> recomanacio(String userId, int numMinEscoltes, boolean sexe, int rangEdat, boolean pais, boolean preferits) throws ElementNoTrobat {
+        try{
+            Usuari usuari = this.graf.consultarVertexEsquerra(userId);
+            TADLlista<String> escoltatsObjectiuIds = this.graf.obtenirAdjacentsEsquerra(userId);
 
-        return null;
+            String top1 = null, top2 = null;
+            int top1Count = -1, top2Count = -1;
+            if(preferits){
+                for(int i = 0; i < escoltatsObjectiuIds.numElem(); i++){
+                    try{
+                        String artistId = escoltatsObjectiuIds.consultar(i);
+                        int count = consultarEscoltes(usuari, consultarArtista(artistId));
+                        if(count > top1Count){
+                            top2 = top1;
+                            top2Count = top1Count;
+                            top1 = artistId;
+                            top1Count = count;
+                        }
+                        else{
+                            if(count > top2Count){
+                                top2 = artistId;
+                                top2Count = count;
+                            }
+                        }
+                    }
+                    catch (LlistaBuida | ElementNoTrobat ignored){}
+                }
+            }
+
+            TADLlista<String> resultat = new LlistaArrayList<>(Math.max(1, numArtistes()));
+            TADLlista<String> usuarisIds = obtenirShaUsuaris();
+
+            for (int i = 0; i < usuarisIds.numElem(); i++) {
+                try {
+                    String candidatId = usuarisIds.consultar(i);
+                    if (candidatId.equals(userId)) continue;
+
+                    Usuari candidat = consultarUsuari(candidatId);
+
+                    // filtre per sexe
+                    if (sexe && !usuari.getGenere().isEmpty()
+                            && !usuari.getGenere().equals(candidat.getGenere())) continue;
+
+                    // filtre per edat
+                    if (rangEdat != -1) {
+                        if (usuari.getEdat() == -1 || candidat.getEdat() == -1) continue;
+                        if (Math.abs(usuari.getEdat() - candidat.getEdat()) > rangEdat) continue;
+                    }
+
+                    // filtre per pais
+                    if (pais && !usuari.getPais().equals(candidat.getPais())) continue;
+
+                    TADLlista<String> artistesCandidatIds = obtenirArtistesEscoltats(candidat);
+
+                    // filtre per preferits de l'usuari
+                    if (preferits) {
+                        boolean comparteix = (top1 != null && artistesCandidatIds.existeix(top1))
+                                          || (top2 != null && artistesCandidatIds.existeix(top2));
+                        if (!comparteix) continue;
+                    }
+
+                    // inserim els artistes recomenables del candidat
+                    for (int j = 0; j < artistesCandidatIds.numElem(); j++) {
+                        try {
+                            String artistId = artistesCandidatIds.consultar(j);
+                            if (escoltatsObjectiuIds.existeix(artistId)) continue;
+
+                            Artista artista = consultarArtista(artistId);
+                            int count = consultarEscoltes(candidat, artista);
+                            if (count < numMinEscoltes) continue;
+
+                            String id = artista.getArtista();
+                            if (!resultat.existeix(id)) resultat.inserir(id);
+                        } catch (LlistaBuida | ElementNoTrobat | LlistaPlena ignored) {}
+                    }
+                } catch (LlistaBuida | ElementNoTrobat ignored) {}
+            }
+            return resultat;
+        }
+        catch(VertexNoTrobat e){
+            throw new ElementNoTrobat();
+        }
     }
 }
